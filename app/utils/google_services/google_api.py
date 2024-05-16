@@ -7,6 +7,8 @@ from app.utils.google_services.services import (get_google_drive_service,
                                                 get_google_sheet_service)
 
 FORMAT = "%Y/%m/%d %H:%M:%S"
+ROW_COUNT = 100
+COLUMN_COUNT = 11
 
 
 async def spreadsheets_create(wrapper_services: Aiogoogle) -> str:
@@ -23,8 +25,8 @@ async def spreadsheets_create(wrapper_services: Aiogoogle) -> str:
                 'sheetId': 0,
                 'title': 'Лист1',
                 'gridProperties': {
-                    'row_count': 100,
-                    'column_count': 11
+                    'row_count': ROW_COUNT,
+                    'column_count': COLUMN_COUNT
                 }
             }
         }]
@@ -33,7 +35,6 @@ async def spreadsheets_create(wrapper_services: Aiogoogle) -> str:
         service.spreadsheets.create(json=spreadsheet_body)
     )
     spreadsheetid = response['spreadsheetId']
-    print('https://docs.google.com/spreadsheets/d/' + spreadsheetid)
     return spreadsheetid
 
 
@@ -80,7 +81,7 @@ async def spreadsheets_update_value(
         'majorDimension': 'ROWS',
         'values': table_values
     }
-    response = await wrapper_services.as_service_account(
+    await wrapper_services.as_service_account(
         service.spreadsheets.values.update(
             spreadsheetId=spreadsheetid,
             range='A1:E30',
@@ -88,3 +89,4 @@ async def spreadsheets_update_value(
             json=update_body
         )
     )
+    return f'https://docs.google.com/spreadsheets/d/{spreadsheetid}'
