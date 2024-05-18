@@ -40,8 +40,7 @@ class CRUDCharityProject(CRUDBase):
                 CharityProject.fully_invested == 1
             ).order_by(fundraising)
         )
-        charity_projects = charity_projects.all()
-        return charity_projects
+        return charity_projects.all()
 
 
 charity_project_crud = CRUDCharityProject(CharityProject)

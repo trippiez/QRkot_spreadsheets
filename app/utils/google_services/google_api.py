@@ -6,7 +6,7 @@ from app.core.config import settings
 from app.utils.google_services.services import (get_google_drive_service,
                                                 get_google_sheet_service)
 
-FORMAT = "%Y/%m/%d %H:%M:%S"
+FORMAT = '%Y/%m/%d %H:%M:%S'
 ROW_COUNT = 100
 COLUMN_COUNT = 11
 
@@ -34,8 +34,7 @@ async def spreadsheets_create(wrapper_services: Aiogoogle) -> str:
     response = await wrapper_services.as_service_account(
         service.spreadsheets.create(json=spreadsheet_body)
     )
-    spreadsheetid = response['spreadsheetId']
-    return spreadsheetid
+    return response['spreadsheetId']
 
 
 async def set_user_permissions(
